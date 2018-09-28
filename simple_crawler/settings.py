@@ -146,7 +146,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 CELERY_BEAT_SCHEDULE = {
     'hello': {
-        'task': 'play_market.tasks.hello',
+        'task': 'play_market.tasks.crawl_play_market',
         'schedule': crontab(minute=0, hour='6')
     }
 }
