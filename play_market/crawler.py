@@ -3,7 +3,15 @@ from bs4 import BeautifulSoup
 
 
 class GooglePlayCrawler:
+    """
+    Performs crawling in game categories section of google play market
+    """
     def __init__(self, hl='en', gl='us'):
+        """
+        Basic initialization of class that accepts two parameters.
+        :param hl: language code, defaults to 'en'
+        :param gl: geolocation code, defaults to 'us'
+        """
         self.language = hl
         self.geolocation = gl
         self.base_url = "https://play.google.com"
@@ -15,13 +23,20 @@ class GooglePlayCrawler:
         }
 
     def _build_url(self, url=''):
+        """
+        Helper method which builds url that is used during crawling.
+        :param url: url to be used for building
+        :return str: string with parameters attached if form of query_params
+        """
         return self.base_url + url + '?' + '&'.join([
             '{}={}'.format(k, v) for k, v in self.params.items()
         ])
 
     def get_app_info_dict(self, raw_app: BeautifulSoup) -> dict:
         """
-        Pickle playmarket app info from given BeautifulSoup input.
+        Gets playmarket app info from given BeautifulSoup input.
+        :param raw_app: BeautifulSoup object with all app information
+        :return dict: dict that contains all information extracted from raw_app
         """
 
         url = (
@@ -49,7 +64,11 @@ class GooglePlayCrawler:
             'score': score,
         }
 
-    def getGameSubcategories(self):
+    def getGameSubcategories(self) -> [dict, dict, ...]:
+        """
+        Retrieves game categories from play market
+        :return list: list that contains dicts {href:str, title:str}
+        """
         request = self.http.request('GET', self._build_url(self.base_game_url))
         soup = BeautifulSoup(request.data)
         games_subcategory_links = soup.select('a.leaf-submenu-link')
@@ -58,7 +77,12 @@ class GooglePlayCrawler:
             for link in games_subcategory_links
         ]
 
-    def getSubcategoryGames(self, subcategory_url):
+    def getSubcategoryGames(self, subcategory_url: str) -> [dict, dict, ...]:
+        """
+        Retrieves games from specified category
+        :param subcategory_url: url of subcategory to wirk with
+        :return list: list that contains dicts filled with app information
+        """
         request = self.http.request('GET', self._build_url(subcategory_url))
         soup = BeautifulSoup(request.data)
         subcategory_games = soup.select('div[data-uitype=500]')
