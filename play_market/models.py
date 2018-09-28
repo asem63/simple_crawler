@@ -11,7 +11,7 @@ class Category(models.Model):
 
 class App(models.Model):
     """
-    Category information
+    App information
     """
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     app_id = models.CharField(max_length=300)
