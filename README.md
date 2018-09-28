@@ -6,10 +6,11 @@ crawling scheduled to be performed once a day
 
 to force sart crawling use force_crawl api endpoint (below)
 
-BUILD:
+## BUILD:
+
 docker-compose up
 
-API DESCTIPTION
+## API DESCTIPTION
 
 localhost:8000/play_market/api/category/     list of all categories in db
 
@@ -17,7 +18,7 @@ localhost:8000/play_market/api/app/          list of all apps in db
 
 localhost:8000/play_market/api/force_crawl/  force_start scrapping
 
-requerements:
+## requerements:
 
 django==2.1.1
 
