@@ -11,6 +11,8 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
+        # too lazy to use Multiprocessing here
+
         gcr = GooglePlayCrawler()
         # get game categories
         game_categ_arr = gcr.getGameSubcategories()
