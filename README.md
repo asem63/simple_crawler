@@ -1,6 +1,10 @@
 # simple_crawler
 
-file that contains crawler code play_market/crawler.py 
+file that contains crawler code: play_market/crawler.py 
+
+command that uses crawler to scrap google play and write data to db: play_market/management/commands/crawl_play_market.py
+
+all else is django and dango_rest_framework code that can be ignored (used for data representation)
 
 crawling scheduled to be performed once a day
 
