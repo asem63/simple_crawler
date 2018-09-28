@@ -6,7 +6,7 @@ crawling scheduled to be performed once a day
 
 to force sart crawling use force_crawl api endpoint (below)
 
-## BUILD:
+## BUILD
 
 docker-compose up
 
