@@ -10,7 +10,7 @@ to force sart crawling use force_crawl api endpoint (below)
 
 docker-compose up
 
-## API DESCTIPTION
+## API DESCRIPTION
 
 localhost:8000/play_market/api/category/     list of all categories in db
 
