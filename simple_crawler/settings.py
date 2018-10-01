@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_elasticsearch_dsl',
     'rest_framework',
     'play_market'
 ]
@@ -149,4 +150,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'play_market.tasks.crawl_play_market',
         'schedule': crontab(minute=0, hour='6')
     }
+}
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'elasticsearch:9200'
+    },
 }

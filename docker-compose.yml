@@ -5,8 +5,14 @@ services:
     image: postgres:9.6.5
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - localnet
+  
   redis:
     image: "redis:alpine"
+    networks:
+      - localnet
+  
   web:
     build: .
     command: bash -c "python /code/manage.py migrate --noinput && python /code/manage.py runserver 0.0.0.0:8000"
@@ -19,6 +25,11 @@ services:
     depends_on:
       - db
       - redis
+      - elasticsearch
+      - elasticsearch2
+    networks:
+      - localnet
+  
   celery:
     build: .
     command: celery -A simple_crawler worker -l info
@@ -27,6 +38,11 @@ services:
     depends_on:
       - db
       - redis
+      - elasticsearch
+      - elasticsearch2
+    networks:
+      - localnet
+  
   celery-beat:
     build: .
     command: celery -A simple_crawler beat -l info
@@ -35,6 +51,52 @@ services:
     depends_on:
       - db
       - redis
+      - elasticsearch
+      - elasticsearch2
+    networks:
+      - localnet
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+    container_name: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - localnet
+
+  elasticsearch2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+    container_name: elasticsearch2
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata2:/usr/share/elasticsearch/data
+    networks:
+      - localnet
 
 volumes:
   postgres_data:
+  esdata1:
+    driver: local
+  esdata2:
+    driver: local
+
+networks:
+  localnet:

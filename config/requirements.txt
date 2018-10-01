@@ -1,5 +1,7 @@
 django==2.1.1
 djangorestframework==3.8.2
+elasticsearch-dsl==6.1.0
+django-elasticsearch-dsl
 urllib3
 psycopg2
 celery==4.2.1
