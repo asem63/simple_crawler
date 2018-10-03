@@ -70,7 +70,7 @@ class GooglePlayCrawler:
         :return list: list that contains dicts {href:str, title:str}
         """
         request = self.http.request('GET', self._build_url(self.base_game_url))
-        soup = BeautifulSoup(request.data)
+        soup = BeautifulSoup(request.data, features='html.parser')
         games_subcategory_links = soup.select('a.leaf-submenu-link')
         return [
             {'href': link.attrs['href'], 'title': link.attrs['title']}
@@ -84,7 +84,7 @@ class GooglePlayCrawler:
         :return list: list that contains dicts filled with app information
         """
         request = self.http.request('GET', self._build_url(subcategory_url))
-        soup = BeautifulSoup(request.data)
+        soup = BeautifulSoup(request.data, features='html.parser')
         subcategory_games = soup.select('div[data-uitype=500]')
         return [
             self.get_app_info_dict(game)

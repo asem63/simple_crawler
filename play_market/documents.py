@@ -21,6 +21,15 @@ class CategoryDocument(DocType):
         ]
         related_models = [App]
 
+    def get_queryset(self):
+        return super(CategoryDocument, self).get_queryset().select_related(
+            'app'
+        )
+
+    def get_instances_from_related(self, related_instance):
+        if isinstance(related_instance, App):
+            return related_instance.category
+
 
 app = Index('app')
 # See Elasticsearch Indices API reference for available settings
@@ -52,3 +61,12 @@ class AppDocument(DocType):
             'score',
         ]
         related_models = [Category]
+
+    def get_queryset(self):
+        return super(AppDocument, self).get_queryset().select_related(
+            'category'
+        )
+
+    def get_instances_from_related(self, related_instance):
+        if isinstance(related_instance, Category):
+            return related_instance.app_set.all()
