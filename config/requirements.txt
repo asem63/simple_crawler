@@ -1,5 +1,5 @@
 uwsgi
-django==2.1.1
+django==2.1.2
 djangorestframework==3.8.2
 elasticsearch-dsl==6.1.0
 django-elasticsearch-dsl
