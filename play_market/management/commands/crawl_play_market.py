@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
         gcr = GooglePlayCrawler()
         # get game categories
-        game_categ_arr = gcr.getGameSubcategories()
+        game_categ_arr = gcr.get_game_subcategories()
 
         for game_categ_dict in game_categ_arr:
             # write game category to db if not exist
@@ -26,7 +26,7 @@ class Command(BaseCommand):
                 mnemonic_name=mnemonic_name, title=title
             )
             # get games in specific category
-            games = gcr.getSubcategoryGames(href)
+            games = gcr.get_subcategory_games(href)
             for game in games:
                 # write game to db if not exist
                 App.objects.get_or_create(

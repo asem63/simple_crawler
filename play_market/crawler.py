@@ -64,7 +64,7 @@ class GooglePlayCrawler:
             'score': score,
         }
 
-    def getGameSubcategories(self) -> [dict, dict, ...]:
+    def get_game_subcategories(self) -> [dict, dict, ...]:
         """
         Retrieves game categories from play market
         :return list: list that contains dicts {href:str, title:str}
@@ -77,7 +77,7 @@ class GooglePlayCrawler:
             for link in games_subcategory_links
         ]
 
-    def getSubcategoryGames(self, subcategory_url: str) -> [dict, dict, ...]:
+    def get_subcategory_games(self, subcategory_url: str) -> [dict, dict, ...]:
         """
         Retrieves games from specified category
         :param subcategory_url: url of subcategory to wirk with
